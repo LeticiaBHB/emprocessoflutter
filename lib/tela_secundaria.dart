@@ -74,7 +74,7 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista'),
+        title: Text('Lista de Itens'),
       ),
       body: Container(
         margin: EdgeInsets.all(20.0),
@@ -83,6 +83,42 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
           itemBuilder: (context, indice) {
             String descricaoLimitada = limitarTexto(_itens[indice]['description'], 10);
             return ListTile(
+              onTap: (){
+               // print('clique com onTap ${indice}');
+              showDialog(
+                  context: context,
+                  builder: (context){
+                    return AlertDialog(
+                      title: Text(_itens[indice]['title']),
+                      titlePadding: EdgeInsets.all(20),
+                      titleTextStyle: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black87
+                      ),
+                      content: Text(_itens[indice]['description']),
+                      contentPadding: EdgeInsets.all(25),
+                      backgroundColor: Colors.blue[200],
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                           Navigator.pop(context);
+                          },
+                          child: Text('Voltar'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                           Navigator.pop(context);
+                          },
+                          child: Text('Adicionar'),
+                        ),
+                      ],
+                    );
+                  }
+              );
+              },
+//              onLongPress: (){
+  //              print("clique com onLongPress");
+    //          },
               title: Text(_itens[indice]['title']),
               subtitle: Text(
                 descricaoLimitada,

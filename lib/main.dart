@@ -8,6 +8,7 @@ void main() {
     initialRoute:"/",routes: {
       '/secundaria':(context) => TelaSecundaria(),
       '/terciaria':(context) => TelaTerciaria(),
+      '/terciaria':(context) => TelaTerciaria(),
   },
     home:TelaPrincipal (),
   ));

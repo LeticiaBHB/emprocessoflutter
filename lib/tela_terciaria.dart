@@ -10,7 +10,7 @@ class TelaTerciaria extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Reserva de Hotel'),
+          title: Text('Reserva de itens'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -63,7 +63,7 @@ class _ReservaAppState extends State<ReservaApp> {
           },
         ),
         TextField(
-          decoration: InputDecoration(labelText: 'Dias Hospedados'),
+          decoration: InputDecoration(labelText: 'Dia que irá buscar'),
           onChanged: (text) {
             setState(() {
               reserva.diasHospedados = int.tryParse(text) ?? 0;
@@ -71,23 +71,7 @@ class _ReservaAppState extends State<ReservaApp> {
           },
         ),
         TextField(
-          decoration: InputDecoration(labelText: 'Data de Entrada (dd/mm/yyyy)'),
-          onChanged: (text) {
-            setState(() {
-              reserva.dataEntrada = DateTime.tryParse(text);
-            });
-          },
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Data de Saída (dd/mm/yyyy)'),
-          onChanged: (text) {
-            setState(() {
-              reserva.dataSaida = DateTime.tryParse(text);
-            });
-          },
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Quantidade de Pessoas'),
+          decoration: InputDecoration(labelText: 'Quantidade de Peças'),
           onChanged: (text) {
             setState(() {
               reserva.quantidadePessoas = int.tryParse(text) ?? 0;
@@ -96,7 +80,7 @@ class _ReservaAppState extends State<ReservaApp> {
         ),
         Row(
           children: <Widget>[
-            Text('Possui Animal?'),
+            Text('Pagamento com Pix?'),
             Checkbox(
               value: reserva.possuiAnimal,
               onChanged: (value) {
@@ -106,14 +90,6 @@ class _ReservaAppState extends State<ReservaApp> {
               },
             ),
           ],
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Valor da Diária'),
-          onChanged: (text) {
-            setState(() {
-              reserva.valorDiaria = double.tryParse(text) ?? 0.0;
-            });
-          },
         ),
         SizedBox(height: 20.0),
         ElevatedButton(
@@ -130,12 +106,9 @@ class _ReservaAppState extends State<ReservaApp> {
                       children: [
                         Text("Nome do Cliente: ${reserva.nomeCliente}"),
                         Text("Telefone: ${reserva.telefone}"),
-                        Text("Dias Hospedados: ${reserva.diasHospedados}"),
-                        Text("Data de Entrada: ${reserva.dataEntrada != null ? sdf.format(reserva.dataEntrada!) : ''}"),
-                        Text("Data de Saída: ${reserva.dataSaida != null ? sdf.format(reserva.dataSaida!) : ''}"),
-                        Text("Quantidade de Pessoas: ${reserva.quantidadePessoas}"),
-                        Text("Possui Animal: ${reserva.possuiAnimal ? "Sim" : "Não"}"),
-                        Text("Valor da Diária: R\$ ${reserva.valorDiaria.toStringAsFixed(2)}"),
+                        Text("Dia que irá buscar': ${reserva.diasHospedados}"),
+                        Text("Quantidade de Peças: ${reserva.quantidadePessoas}"),
+                        Text("Pagamento com Pix: ${reserva.possuiAnimal ? "Sim" : "Não"}"),
                       ],
                     ),
                   ),
@@ -151,7 +124,7 @@ class _ReservaAppState extends State<ReservaApp> {
               },
             );
           },
-          child: Text('Exibir Reserva'),
+          child: Text('Exibir Ticket'),
         ),
       ],
     );
