@@ -18,7 +18,14 @@ class TelaPrincipal extends StatelessWidget {
                   Navigator.pushNamed(context, '/secundaria');
                 },
                 child: Text('Ir para a segunda tela'
-                ),),
+                ),
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.pushNamed(context, '/terciaria');
+              },
+              child: Text('Ir para a terceira tela'),
+            ),
           ],
         ),
       ),

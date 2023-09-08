@@ -1,48 +1,106 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class TelaSecundaria extends StatefulWidget {
   @override
   _TelaSecundariaState createState() => _TelaSecundariaState();
 }
 
-class _TelaSecundariaState extends State<TelaSecundaria>{
-  List _list = [];
-  void _carregarItens(){
+class _TelaSecundariaState extends State<TelaSecundaria> {
+  List _itens = [];
 
+  String limitarTexto(String texto, int limitePalavras) {
+    List<String> palavras = texto.split(' ');
+    if (palavras.length <= limitePalavras) {
+      return texto;
+    }
+    String textoLimitado = '';
+    for (int i = 0; i < limitePalavras; i++) {
+      textoLimitado += palavras[i] + ' ';
+    }
+    return textoLimitado.trim() + '...';
   }
+
+  Future<void> _carregarItens() async {
+    final response = await http.get(Uri.parse('https://fakestoreapi.com/products?limit=20'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      setState(() {
+        _itens = data;
+      });
+    } else {
+      throw Exception('Falha ao carregar dados da API');
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Row(
-              children: [
-                Center(
-                  child: Container(
-                    child: Text('tela secundária'),
-                  ),
+  void initState() {
+    super.initState();
+    _carregarItens();
+  }
+
+  Future<void> _exibirAlertaComImagem(String imageUrl) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                  imageUrl,
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
                 ),
+                SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/');
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Fechar o AlertDialog
                   },
-                  child: Text('Ir para a primeira tela'),
+                  child: Text('Voltar'),
                 ),
               ],
             ),
+          ),
+        );
+      },
+    );
+  }
 
-            ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, indice){
-                  print('item${indice}');
-                  return ListTile(
-                    title:  Text(indice.toString()),
-                    subtitle: Text('subtitulo'),
-                  );
-                }
-            ),
-          ],
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lista'),
+      ),
+      body: Container(
+        margin: EdgeInsets.all(20.0),
+        child: ListView.builder(
+          itemCount: _itens.length,
+          itemBuilder: (context, indice) {
+            String descricaoLimitada = limitarTexto(_itens[indice]['description'], 10);
+            return ListTile(
+              title: Text(_itens[indice]['title']),
+              subtitle: Text(
+                descricaoLimitada,
+                style: TextStyle(fontSize: 14.0),
+              ),
+              leading: GestureDetector(
+                onTap: () {
+                  _exibirAlertaComImagem(_itens[indice]['image']);
+                },
+                child: Image.network(
+                  _itens[indice]['image'],
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
