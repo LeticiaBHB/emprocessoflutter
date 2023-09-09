@@ -13,15 +13,9 @@ void main() {
       '/secundaria': (context) => TelaSecundaria(),
       '/terciaria': (context) => TelaTerciaria(
         itensSelecionados: [],
-        adicionarItemSelecionado: (Map<String, dynamic> item) {
-        },
+        adicionarItemSelecionado: (Map<String, dynamic> item) {},
       ),
-      '/quaternaria': (context) => TelaQuaternaria(
-        itensSelecionados: [],
-        quantidadePecasSelecionadas: 0,
-        adicionarItemSelecionado: (Map<String, dynamic> item) {
-        },
-      ),
+      '/quaternaria': (context) => TelaQuaternaria(quantidadePecasSelecionadas: 0,),
       '/quintenario': (context) => TelaQuintenaria(),
       '/sextenaria': (context) => Sextenaria(),
     },

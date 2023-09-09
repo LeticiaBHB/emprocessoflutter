@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'tela_quaternaria.dart';
+import 'package:listas_e_outros/grupo1/tela_quaternaria.dart';
 
 class TelaTerciaria extends StatefulWidget {
   final List itensSelecionados;
@@ -14,17 +14,6 @@ class TelaTerciaria extends StatefulWidget {
 }
 
 class _TelaTerciariaState extends State<TelaTerciaria> {
-  List<Map<String, dynamic>> itensSelecionados = [];
-  void adicionarItemSelecionado(Map<String, dynamic> item) {
-    setState(() {
-      itensSelecionados.add(item);
-    });
-  }
-  void removerItemSelecionado(Map<String, dynamic> item) {
-    setState(() {
-      itensSelecionados.remove(item);
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,7 +31,7 @@ class _TelaTerciariaState extends State<TelaTerciaria> {
                 SizedBox(height: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: itensSelecionados.map((item) {
+                  children: widget.itensSelecionados.map((item) {
                     return ListTile(
                       title: Text(item['title']),
                       subtitle: Text(item['description']),
@@ -57,12 +46,10 @@ class _TelaTerciariaState extends State<TelaTerciaria> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Navegue para a TelaQuaternaria e passe os itens selecionados
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => TelaQuaternaria(
-                          itensSelecionados: itensSelecionados,
-                          quantidadePecasSelecionadas: itensSelecionados.length, adicionarItemSelecionado: (Map<String, dynamic> item) {  }, // Atualize aqui
+                          quantidadePecasSelecionadas: widget.itensSelecionados.length,
                         ),
                       ),
                     );

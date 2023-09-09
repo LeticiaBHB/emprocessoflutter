@@ -9,15 +9,11 @@ class Reserva {
 }
 
 class TelaQuaternaria extends StatefulWidget {
-  final List itensSelecionados;
   final int quantidadePecasSelecionadas;
-  final Function(Map<String, dynamic>) adicionarItemSelecionado;
 
   TelaQuaternaria({
-  Key? key,
-  required this.itensSelecionados,
-  required this.quantidadePecasSelecionadas,
-  required this.adicionarItemSelecionado,
+    Key? key,
+    required this.quantidadePecasSelecionadas,
   });
   @override
   State<TelaQuaternaria> createState() => _TelaQuaternariaState();
@@ -26,8 +22,6 @@ class TelaQuaternaria extends StatefulWidget {
 class _TelaQuaternariaState extends State<TelaQuaternaria> {
   final reserva = Reserva();
   final sdf = DateFormat("dd/MM/yyyy");
-  int quantidadePecasSelecionadas = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +30,7 @@ class _TelaQuaternariaState extends State<TelaQuaternaria> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Quantidade de Peças Selecionadas: $quantidadePecasSelecionadas'),
+            Text('Quantidade de Peças Selecionadas: ${widget.quantidadePecasSelecionadas}'),
             TextField(
               decoration: InputDecoration(labelText: 'Nome do Cliente'),
               onChanged: (text) {
@@ -90,10 +84,8 @@ class _TelaQuaternariaState extends State<TelaQuaternaria> {
                             Text("Nome do Cliente: ${reserva.nomeCliente}"),
                             Text("Telefone: ${reserva.telefone}"),
                             Text("Dia que irá buscar': ${reserva.diasreservados}"),
-                            Text(
-                                "Quantidade de Peças: $quantidadePecasSelecionadas"),
-                            Text(
-                                "Pagamento com Pix: ${reserva.pix ? "Sim" : "Não"}"),
+                            Text("Quantidade de Peças: ${widget.quantidadePecasSelecionadas}"),
+                            Text("Pagamento com Pix: ${reserva.pix ? "Sim" : "Não"}"),
                           ],
                         ),
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'package:listas_e_outros/grupo1/tela_terciaria.dart';
 
 class TelaSecundaria extends StatefulWidget {
@@ -11,7 +12,6 @@ class TelaSecundaria extends StatefulWidget {
 class _TelaSecundariaState extends State<TelaSecundaria> {
   List _itens = [];
   List itensSelecionados = [];
-
 
   String limitarTexto(String texto, int limitePalavras) {
     List<String> palavras = texto.split(' ');
@@ -27,7 +27,7 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
 
   Future<void> _carregarItens() async {
     final response =
-        await http.get(Uri.parse('https://fakestoreapi.com/products?limit=20'));
+    await http.get(Uri.parse('https://fakestoreapi.com/products?limit=20'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -80,8 +80,12 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
     });
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => TelaTerciaria(itensSelecionados: [], adicionarItemSelecionado: (Map<String, dynamic> item) {
-        },),
+        builder: (context) => TelaTerciaria(
+          itensSelecionados: itensSelecionados,
+          adicionarItemSelecionado: (Map<String, dynamic> item) {
+            // Implemente a lógica para adicionar itens na TelaSecundaria, se necessário.
+          },
+        ),
       ),
     );
   }
@@ -107,7 +111,8 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
                     return AlertDialog(
                       title: Text(_itens[indice]['title']),
                       titlePadding: EdgeInsets.all(20),
-                      titleTextStyle: TextStyle(fontSize: 20, color: Colors.black87),
+                      titleTextStyle:
+                      TextStyle(fontSize: 20, color: Colors.black87),
                       content: Text(_itens[indice]['description']),
                       contentPadding: EdgeInsets.all(25),
                       backgroundColor: Colors.blue[200],
