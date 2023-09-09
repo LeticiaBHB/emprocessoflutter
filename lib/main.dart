@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:listas_e_outros/grupo2/tela_quintenaria.dart';
+import 'package:listas_e_outros/grupo3/sextenaria.dart';
 import 'tela_principal.dart';
 import 'grupo1/tela_secundaria.dart';
 import 'grupo1/tela_terciaria.dart';
@@ -22,6 +23,7 @@ void main() {
         },
       ),
       '/quintenario': (context) => TelaQuintenaria(),
+      '/sextenaria': (context) => Sextenaria(),
     },
     home: TelaPrincipal(),
   ));
