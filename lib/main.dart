@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:listas_e_outros/tela_quintenaria.dart';
+import 'package:listas_e_outros/grupo2/tela_quintenaria.dart';
 import 'tela_principal.dart';
-import 'tela_secundaria.dart';
-import 'tela_terciaria.dart';
-import 'tela_quaternaria.dart';
+import 'grupo1/tela_secundaria.dart';
+import 'grupo1/tela_terciaria.dart';
+import 'grupo1/tela_quaternaria.dart';
 
 void main() {
   runApp(MaterialApp(

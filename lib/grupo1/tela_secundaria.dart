@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:listas_e_outros/tela_terciaria.dart';
+import 'package:listas_e_outros/grupo1/tela_terciaria.dart';
 
 class TelaSecundaria extends StatefulWidget {
   @override
