@@ -2,10 +2,10 @@ basic store with api.
 
 | 1 | 2 | 3 | 4 |
 |----------|----------|----------|---------|
-| ![App Screenshot](screenshots/1.jpeg) | ![App Screenshot](screenshots/2.jpeg) | ![App Screenshot](screenshots/3.jpeg) |![App Screenshot](screenshots/4.jpeg) |
+| ![App Screenshot](screenshot/1.jpeg) | ![App Screenshot](screenshot/2.jpeg) | ![App Screenshot](screenshot/3.jpeg) |![App Screenshot](screenshot/4.jpeg) |
 | 5 | 6 | 7 |
 |----------|----------|----------|
-| ![App Screenshot](screenshots/5.jpeg) | ![App Screenshot](screenshots/6.jpeg) | ![App Screenshot](screenshots/7.jpeg) |
+| ![App Screenshot](screenshot/5.jpeg) | ![App Screenshot](screenshot/6.jpeg) | ![App Screenshot](screenshot/7.jpeg) |
 ##License
 
 MIT License
