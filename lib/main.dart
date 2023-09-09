@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:listas_e_outros/tela_quintenaria.dart';
 import 'tela_principal.dart';
 import 'tela_secundaria.dart';
 import 'tela_terciaria.dart';
@@ -20,6 +21,7 @@ void main() {
         adicionarItemSelecionado: (Map<String, dynamic> item) {
         },
       ),
+      '/quintenario': (context) => TelaQuintenaria(),
     },
     home: TelaPrincipal(),
   ));

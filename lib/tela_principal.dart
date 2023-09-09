@@ -10,7 +10,7 @@ class TelaPrincipal extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                  child: Text('tela principal'),
+                  child: Text(''),
               ),
             ),
             ElevatedButton(
@@ -25,6 +25,12 @@ class TelaPrincipal extends StatelessWidget {
                 Navigator.pushNamed(context, '/terciaria');
               },
               child: Text('Ir para a terceira tela'),
+            ),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.pushNamed(context, '/quintenario');
+              },
+              child: Text('Área de comentarios'),
             ),
           ],
         ),
