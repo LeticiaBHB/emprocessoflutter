@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:listas_e_outros/tela_terciaria.dart';
 
 class TelaSecundaria extends StatefulWidget {
   @override
@@ -9,6 +10,8 @@ class TelaSecundaria extends StatefulWidget {
 
 class _TelaSecundariaState extends State<TelaSecundaria> {
   List _itens = [];
+  List itensSelecionados = [];
+
 
   String limitarTexto(String texto, int limitePalavras) {
     List<String> palavras = texto.split(' ');
@@ -23,7 +26,8 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
   }
 
   Future<void> _carregarItens() async {
-    final response = await http.get(Uri.parse('https://fakestoreapi.com/products?limit=20'));
+    final response =
+        await http.get(Uri.parse('https://fakestoreapi.com/products?limit=20'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -70,6 +74,18 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
     );
   }
 
+  Future<void> _adicionarItemSelecionado(Map item) async {
+    setState(() {
+      itensSelecionados.add(item);
+    });
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TelaTerciaria(itensSelecionados: [], adicionarItemSelecionado: (Map<String, dynamic> item) {
+        },),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,44 +97,38 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
         child: ListView.builder(
           itemCount: _itens.length,
           itemBuilder: (context, indice) {
-            String descricaoLimitada = limitarTexto(_itens[indice]['description'], 10);
+            String descricaoLimitada =
+            limitarTexto(_itens[indice]['description'], 10);
             return ListTile(
-              onTap: (){
-               // print('clique com onTap ${indice}');
-              showDialog(
+              onTap: () {
+                showDialog(
                   context: context,
-                  builder: (context){
+                  builder: (context) {
                     return AlertDialog(
                       title: Text(_itens[indice]['title']),
                       titlePadding: EdgeInsets.all(20),
-                      titleTextStyle: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black87
-                      ),
+                      titleTextStyle: TextStyle(fontSize: 20, color: Colors.black87),
                       content: Text(_itens[indice]['description']),
                       contentPadding: EdgeInsets.all(25),
                       backgroundColor: Colors.blue[200],
                       actions: [
                         ElevatedButton(
                           onPressed: () {
-                           Navigator.pop(context);
+                            Navigator.pop(context);
                           },
                           child: Text('Voltar'),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                           Navigator.pop(context);
+                            _adicionarItemSelecionado(_itens[indice]);
                           },
                           child: Text('Adicionar'),
                         ),
                       ],
                     );
-                  }
-              );
+                  },
+                );
               },
-//              onLongPress: (){
-  //              print("clique com onLongPress");
-    //          },
               title: Text(_itens[indice]['title']),
               subtitle: Text(
                 descricaoLimitada,

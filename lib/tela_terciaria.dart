@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'tela_quaternaria.dart';
 
+class TelaTerciaria extends StatefulWidget {
+  final List itensSelecionados;
+  final Function(Map<String, dynamic>) adicionarItemSelecionado;
+  TelaTerciaria({
+    Key? key,
+    required this.itensSelecionados,
+    required this.adicionarItemSelecionado,
+  });
+  @override
+  _TelaTerciariaState createState() => _TelaTerciariaState();
+}
 
-class TelaTerciaria extends StatelessWidget {
-  const TelaTerciaria({Key? key});
-
+class _TelaTerciariaState extends State<TelaTerciaria> {
+  List<Map<String, dynamic>> itensSelecionados = [];
+  void adicionarItemSelecionado(Map<String, dynamic> item) {
+    setState(() {
+      itensSelecionados.add(item);
+    });
+  }
+  void removerItemSelecionado(Map<String, dynamic> item) {
+    setState(() {
+      itensSelecionados.remove(item);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,123 +34,46 @@ class TelaTerciaria extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(child: ReservaApp()),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Itens selecionados:', style: TextStyle(fontSize: 20)),
+                SizedBox(height: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: itensSelecionados.map((item) {
+                    return ListTile(
+                      title: Text(item['title']),
+                      subtitle: Text(item['description']),
+                      leading: Image.network(
+                        item['image'],
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navegue para a TelaQuaternaria e passe os itens selecionados
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => TelaQuaternaria(
+                          itensSelecionados: itensSelecionados,
+                          quantidadePecasSelecionadas: itensSelecionados.length, adicionarItemSelecionado: (Map<String, dynamic> item) {  }, // Atualize aqui
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text('Confirmar'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
-}
-
-class Reserva {
-  String nomeCliente = '';
-  String telefone = '';
-  int diasHospedados = 0;
-  DateTime? dataEntrada;
-  DateTime? dataSaida;
-  int quantidadePessoas = 0;
-  bool possuiAnimal = false;
-  double valorDiaria = 0.0;
-}
-
-class ReservaApp extends StatefulWidget {
-  @override
-  _ReservaAppState createState() => _ReservaAppState();
-}
-
-class _ReservaAppState extends State<ReservaApp> {
-  final reserva = Reserva();
-  final sdf = DateFormat("dd/MM/yyyy");
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        TextField(
-          decoration: InputDecoration(labelText: 'Nome do Cliente'),
-          onChanged: (text) {
-            setState(() {
-              reserva.nomeCliente = text;
-            });
-          },
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Telefone'),
-          onChanged: (text) {
-            setState(() {
-              reserva.telefone = text;
-            });
-          },
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Dia que irá buscar'),
-          onChanged: (text) {
-            setState(() {
-              reserva.diasHospedados = int.tryParse(text) ?? 0;
-            });
-          },
-        ),
-        TextField(
-          decoration: InputDecoration(labelText: 'Quantidade de Peças'),
-          onChanged: (text) {
-            setState(() {
-              reserva.quantidadePessoas = int.tryParse(text) ?? 0;
-            });
-          },
-        ),
-        Row(
-          children: <Widget>[
-            Text('Pagamento com Pix?'),
-            Checkbox(
-              value: reserva.possuiAnimal,
-              onChanged: (value) {
-                setState(() {
-                  reserva.possuiAnimal = value ?? false;
-                });
-              },
-            ),
-          ],
-        ),
-        SizedBox(height: 20.0),
-        ElevatedButton(
-          onPressed: () {
-            // Exibir os dados da reserva
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Reserva de Hotel'),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Nome do Cliente: ${reserva.nomeCliente}"),
-                        Text("Telefone: ${reserva.telefone}"),
-                        Text("Dia que irá buscar': ${reserva.diasHospedados}"),
-                        Text("Quantidade de Peças: ${reserva.quantidadePessoas}"),
-                        Text("Pagamento com Pix: ${reserva.possuiAnimal ? "Sim" : "Não"}"),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Fechar'),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          child: Text('Exibir Ticket'),
-        ),
-      ],
-    );
-  }
-}
-
-void main() {
-  runApp(TelaTerciaria());
 }
